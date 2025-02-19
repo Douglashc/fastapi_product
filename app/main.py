@@ -5,6 +5,8 @@ from fastapi.responses import HTMLResponse
 from app.db import create_db_and_tables
 
 from app.task import routers as Task
+from app.product import routers as Product
+
 app = FastAPI()
 
 version = "v1"
@@ -38,6 +40,7 @@ app = FastAPI(
     ],
 )
 app.include_router(Task.router, prefix="/tasks", tags=["Tasks"])
+app.include_router(Product.router, prefix="/products", tags=["Products"])
 
 @app.get("/", response_class=HTMLResponse)
 async def read_items():
