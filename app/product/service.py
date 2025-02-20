@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlmodel import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 from app.db import SessionDep
 from app.product.models import Product
 from app.product.schemas import ProductCreate, ProductUpdate
@@ -23,11 +23,12 @@ class ProductService:
     def get_product(self, item_id: int, session: SessionDep):
         statement = (
             select(Product)
-            .where(Product.id == item_id.id)
+            .where(Product.id == item_id)
             .options(selectinload(Product.category))
+            .options(selectinload(Product.brand))
         )
         
-        product_db = session.execute(statement).first()
+        product_db = session.exec(statement).first()
 
         if not product_db:
             raise HTTPException(
@@ -53,7 +54,10 @@ class ProductService:
     # GET ALL PRODUCTS
     # ----------------------
     def get_products(self, session: SessionDep):
-        statement = select(Product).options(selectinload(Product.category))
+        statement = (
+            select(Product)
+            .options(selectinload(Product.category))
+        )
         return session.exec(statement).all()
 
     # DELETE PRODUCT SELECTED

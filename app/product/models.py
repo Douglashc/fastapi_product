@@ -6,16 +6,19 @@ from sqlmodel import Field, SQLModel, Relationship
 
 if TYPE_CHECKING:
     from app.category.models import Category
+    from app.brand.models import Brand
 class Product(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     title: str = Field(default=None)
     price: int = 0
     description: str | None = Field(default=None)
-    category: str | None = Field(default=None)
-    image: str = Field(default=None)
+    image: str | None = Field(default=None)
 
     category_id: Optional[int] = Field(default=None, foreign_key="product_category.id")
     category: Optional["Category"] = Relationship(back_populates="products")
+
+    brand_id: Optional[int] = Field(default=None, foreign_key="product_brand.id")
+    brand: Optional["Brand"] = Relationship(back_populates="products")
 
     created_at: Optional[datetime] = Field(
         default=None,
@@ -25,5 +28,5 @@ class Product(SQLModel, table=True):
     )
     updated_at: Optional[datetime] = Field(
         default=None,
-        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True),
+        sa_column=Column(DateTime(timezone=True), onupdate=func.now(), nullable=True)
     )

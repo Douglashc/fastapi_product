@@ -3,7 +3,7 @@ from fastapi import APIRouter, status
 
 from app.db import SessionDep
 from app.product.models import Product
-from app.product.schemas import ProductCreate, ProductUpdate
+from app.product.schemas import ProductRead, ProductCreate, ProductUpdate
 from app.product.service import ProductService
 
 router = APIRouter()
@@ -21,7 +21,7 @@ async def create_product(
 
 # GET ONE PRODUCT
 # ----------------------
-@router.get("/{product_id}", response_model=Product)
+@router.get("/{product_id}", response_model=ProductRead)
 async def get_product(
     product_id: int,
     session: SessionDep
@@ -41,7 +41,7 @@ async def update_product(
 
 # GET ALL PRODUCTS
 # ----------------------
-@router.get("/", response_model=list[Product])
+@router.get("/", response_model=list[ProductRead])
 async def get_products(
     session: SessionDep
 ):

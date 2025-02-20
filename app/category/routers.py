@@ -17,7 +17,7 @@ async def create_product_category(
     category_data: CategoryCreate,
     session: SessionDep
     ):
-    return service.create_product_category(category_data, session)
+    return service.create_category(category_data, session)
 
 # GET ONE CATEGORY SELECTED
 # ----------------------
@@ -26,7 +26,7 @@ async def get_product_category(
     product_category_id: int,
     session: SessionDep
 ):
-    return service.get_product_category(product_category_id,session)
+    return service.get_category(product_category_id,session)
 
 # UPDATE CATEGORY SELECTED
 # ----------------------
@@ -37,21 +37,21 @@ async def update_product_category(
     session: SessionDep
 ):
     
-    return service.update_product_category(product_category_id, product_category_data, session)
+    return service.update_category(product_category_id, product_category_data, session)
 
 # GET ALL CATEGORIES
 # ----------------------
 @router.get("/", response_model=list[Category])
-async def get_product_categories(
+async def get_categories(
     session: SessionDep
 ):
-    return service.get_product_categories(session)
+    return service.get_categories(session)
 
 # DELETE CATEGORY SELECTED
 # ----------------------
 @router.delete("/{product_category_id}")
-async def delete_product_category(
+async def delete_category(
     product_category_id: int,
     session: SessionDep,
 ):
-    return service.delete_product_category(product_category_id, session)
+    return service.delete_category(product_category_id, session)
