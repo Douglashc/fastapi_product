@@ -1,15 +1,20 @@
 
-from sqlmodel import Field, Relationship, Session, SQLModel, select
+from sqlmodel import Field, SQLModel
 from typing import Optional
 
 class ProductBase(SQLModel):
-    name: str = Field(default=None)
-    description: str | None = Field(default=None)
-    status: bool = True
+    title: str = Field(default=None)
+    price: int = 0
+    description: Optional[str] = None
+    image: Optional[str] = None
 
 # Modelo para crear un nuevo producto (hereda de TaskBase)
 class ProductCreate(ProductBase):
-    pass
+    category_id: Optional[int] = None
 
 class ProductUpdate(ProductBase):
-    pass
+    title: Optional[str] = None
+    price: Optional[int] = None
+    description: Optional[str] = None
+    image: Optional[str] = None
+    category_id: Optional[int] = None 

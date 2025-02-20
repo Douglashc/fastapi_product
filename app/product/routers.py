@@ -10,7 +10,7 @@ router = APIRouter()
 service = ProductService()
 
 
-# CREATE - Crear un nuevo producto
+# CREATE PRODUCT
 # ----------------------
 @router.post("/", response_model=Product, status_code=status.HTTP_201_CREATED)
 async def create_product(
@@ -18,7 +18,8 @@ async def create_product(
     session: SessionDep
     ):
     return service.create_product(product_data, session)
-# GET ONE - Obtener un producto por ID
+
+# GET ONE PRODUCT
 # ----------------------
 @router.get("/{product_id}", response_model=Product)
 async def get_product(
@@ -27,7 +28,7 @@ async def get_product(
 ):
     return service.get_product(product_id,session)
 
-# UPDATE - Actualizar un producto existente
+# UPDATE PRODUCT SELECTED
 # ----------------------
 @router.patch("/{product_id}", response_model=Product, status_code=status.HTTP_201_CREATED)
 async def update_product(
@@ -38,7 +39,7 @@ async def update_product(
     
     return service.update_product(product_id, product_data, session)
 
-# GET ALL PRODUCT - Obtener todos los productos
+# GET ALL PRODUCTS
 # ----------------------
 @router.get("/", response_model=list[Product])
 async def get_products(
@@ -46,7 +47,7 @@ async def get_products(
 ):
     return service.get_products(session)
 
-# DELETE - Eliminar un producto
+# DELETE PRODUCT SELECTED
 # ----------------------
 @router.delete("/{product_id}")
 async def delete_product(
