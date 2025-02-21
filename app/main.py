@@ -1,6 +1,7 @@
 import os
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from app.db import create_db_and_tables
 
@@ -12,17 +13,25 @@ from app.customer import routers as Customer
 
 app = FastAPI()
 
+# Configuración de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://fastapi-product-y5of.onrender.com"],  # Ajusta los dominios permitidos
+    allow_credentials=True,
+    allow_methods=["*"],  # Permitir todos los métodos HTTP
+    allow_headers=["*"],  # Permitir todos los headers
+)
+
 version = "v1"
 
 description = """
 API de un Sistema de tareas y productos, usando FastApi con Python.
 
-Funciones;
-- Crear, Leer, Actualizar y eliminar Tareas
+Funciones:
+- Crear, Leer, Actualizar y Eliminar Tareas
 """
 
 version_prefix = f"/api/{version}"
-
 
 app = FastAPI(
     lifespan=create_db_and_tables,
@@ -42,6 +51,8 @@ app = FastAPI(
         },
     ],
 )
+
+# Incluir routers
 app.include_router(Task.router, prefix="/tasks", tags=["Tasks"])
 app.include_router(Product.router, prefix="/products", tags=["Products"])
 app.include_router(Category.router, prefix="/categories", tags=["Categories"])
