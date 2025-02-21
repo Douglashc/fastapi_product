@@ -28,7 +28,7 @@ app = FastAPI(
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://douglashc.github.io/React-todo/"],  # Agrega el dominio de Render
+    allow_origins=["http://localhost:3000", "https://douglashc.github.io"],  # Agrega el dominio de Render
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos
     allow_headers=["*"],  # Permite todos los headers
