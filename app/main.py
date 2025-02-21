@@ -11,45 +11,27 @@ from app.category import routers as Category
 from app.brand import routers as Brand
 from app.customer import routers as Customer
 
-app = FastAPI()
-
-# Configuración de CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Ajusta los dominios permitidos
-    allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos los métodos HTTP
-    allow_headers=["*"],  # Permitir todos los headers
-)
-
-version = "v1"
-
-description = """
-API de un Sistema de tareas y productos, usando FastApi con Python.
-
-Funciones:
-- Crear, Leer, Actualizar y Eliminar Tareas
-"""
-
-version_prefix = f"/api/{version}"
-
+# Creación correcta de la app (una sola instancia)
 app = FastAPI(
     lifespan=create_db_and_tables,
     title="AppTransactionFastAPI",
-    description=description,
-    version=version,
+    description="API de un Sistema de tareas y productos, usando FastApi con Python.",
+    version="v1",
     license_info={"name": "MIT License", "url": "https://opensource.org/license/mit"},
     contact={
         "name": "Henry Douglas Chavarria Zurita",
         "url": "https://github.com/Douglashc/fastapi_product",
         "email": "douglash.dcz@gmail.com",
     },
-    openapi_tags=[
-        {
-            "name": "Tasks",
-            "description": "Lista de Tareas",
-        },
-    ],
+)
+
+# Configuración de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://fastapi-product-y5of.onrender.com"],  # Agrega el dominio de Render
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos
+    allow_headers=["*"],  # Permite todos los headers
 )
 
 # Incluir routers
