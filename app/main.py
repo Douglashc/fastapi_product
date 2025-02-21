@@ -16,7 +16,7 @@ app = FastAPI()
 # Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "https://fastapi-product-y5of.onrender.com"],  # Ajusta los dominios permitidos
+    allow_origins=["http://localhost:3000"],  # Ajusta los dominios permitidos
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos HTTP
     allow_headers=["*"],  # Permitir todos los headers
